@@ -1,0 +1,15 @@
+[workspace]
+resolver = "2"
+members = [
+    "packages/filerune",
+    "packages/fusion",
+    "tests",
+    "bench",
+]
+
+[workspace.dependencies]
+async-std = "^1.13.0"
+
+[workspace.dependencies.filerune_fusion]
+path = "./packages/fusion"
+features = ["all"]

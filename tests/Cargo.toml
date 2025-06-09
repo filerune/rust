@@ -1,0 +1,9 @@
+[package]
+name = "tests"
+edition = "2024"
+publish = false
+
+[dependencies]
+async-std = { workspace = true }
+filerune_fusion = { workspace = true }
+tokio = { version = "^1.40.0", features = ["macros", "rt"] }

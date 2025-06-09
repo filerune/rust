@@ -1,0 +1,48 @@
+[package]
+name = "filerune_fusion"
+version = "0.1.0"
+authors = ["Alpheus Tang"]
+edition = "2024"
+rust-version = "1.85.0"
+description = """
+A file splitting & merging solution
+"""
+readme = "README.md"
+homepage = "https://github.com/filerune/rust"
+repository = "https://github.com/filerune/rust"
+license = "MIT"
+keywords = [
+    "split",
+    "check",
+    "merge",
+    "util",
+    "fs",
+]
+categories = [
+    "filesystem",
+    "multimedia",
+]
+include = [
+    "src/*", 
+    "Cargo.toml", 
+    "README.md",
+]
+
+[package.metadata.docs.rs]
+features = ["all"]
+
+[dependencies.async-std]
+workspace = true
+optional = true
+
+[dependencies.tokio]
+version = "^1.40.0"
+optional = true
+features = ["fs", "io-util"]
+
+[features]
+default = []
+async_std = ["dep:async-std"]
+async-std = ["async_std"]
+tokio = ["dep:tokio"]
+all = ["async_std", "tokio"]

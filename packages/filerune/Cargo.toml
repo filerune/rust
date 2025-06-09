@@ -3,5 +3,6 @@ name = "filerune"
 version = "0.0.0"
 edition = "2024"
 include = [
+    "src/*", 
     "Cargo.toml", 
 ]

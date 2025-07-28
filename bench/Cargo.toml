@@ -8,5 +8,5 @@ name = "bench"
 harness = false
 
 [dependencies]
-criterion = "~0.6.0"
+criterion = "~0.7.0"
 filerune_fusion = { workspace = true }

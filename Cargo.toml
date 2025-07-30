@@ -9,6 +9,7 @@ members = [
 
 [workspace.dependencies]
 async-std = "^1.13.0"
+tokio = "^1.40.0"
 
 [workspace.dependencies.filerune_fusion]
 path = "./packages/fusion"

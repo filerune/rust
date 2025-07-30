@@ -48,7 +48,7 @@ mod tests {
         )
     }
 
-    #[tokio::test]
+    #[async_std::test]
     async fn test_split_file_creates_chunks() {
         let (_, cache_dir, _, _) = setup("split_file_creates_chunks").await;
 
@@ -62,7 +62,7 @@ mod tests {
         assert!(chunk_count > 0, "No chunks were created.");
     }
 
-    #[tokio::test]
+    #[async_std::test]
     async fn test_check_with_missing_chunks() {
         let (_, cache_dir, _, split_result) =
             setup("check_with_missing_chunks").await;
@@ -85,7 +85,7 @@ mod tests {
         }
     }
 
-    #[tokio::test]
+    #[async_std::test]
     async fn test_check_with_size_error() {
         let (_, cache_dir, _, split_result) =
             setup("check_with_size_error").await;
@@ -108,7 +108,7 @@ mod tests {
         }
     }
 
-    #[tokio::test]
+    #[async_std::test]
     async fn test_successful_check() {
         let (_, cache_dir, _, split_result) = setup("successful_check").await;
 
@@ -126,7 +126,7 @@ mod tests {
         );
     }
 
-    #[tokio::test]
+    #[async_std::test]
     async fn test_merge_creates_output_file() {
         let (_, cache_dir, output_path, _) =
             setup("merge_creates_output_file").await;
@@ -144,7 +144,7 @@ mod tests {
         );
     }
 
-    #[tokio::test]
+    #[async_std::test]
     async fn test_merge_on_empty_cache_dir() {
         let root: PathBuf = env::current_dir().unwrap().into();
         let empty_cache_dir: PathBuf = root

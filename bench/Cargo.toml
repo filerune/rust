@@ -8,5 +8,6 @@ name = "bench"
 harness = false
 
 [dependencies]
-criterion = { workspace = true }
+criterion = { workspace = true, features = ["async_std", "async_smol", "async_tokio"]}
 filerune_fusion = { workspace = true }
+tokio = { workspace = true }

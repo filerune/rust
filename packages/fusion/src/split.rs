@@ -245,7 +245,7 @@ impl Split {
             .open(in_file)
             .map_err(|_| SplitError::InFileNotOpened)?;
 
-        let file_size =
+        let file_size: usize =
             input_file.metadata().map_err(|_| SplitError::InFileNotRead)?.len()
                 as usize;
 

@@ -39,7 +39,7 @@ mod tests {
             cache_dir,
             root.join(".media")
                 .join("output")
-                .join("tokio")
+                .join("smol")
                 .join(cache_name)
                 .join(file_name),
             split_result,
@@ -146,14 +146,14 @@ mod tests {
     async fn test_merge_on_empty_cache_dir() {
         let root: PathBuf = env::current_dir().unwrap();
         let empty_cache_dir: PathBuf =
-            root.join(".media").join("cache").join("tokio").join("empty_test");
+            root.join(".media").join("cache").join("smol").join("empty_test");
 
         fs::create_dir_all(&empty_cache_dir).await.unwrap();
 
         let output_path: PathBuf = root
             .join(".media")
             .join("output")
-            .join("tokio")
+            .join("smol")
             .join("empty_test")
             .join("output.txt");
 

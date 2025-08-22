@@ -75,6 +75,10 @@ pub mod merge;
 #[cfg(feature = "async_std")]
 pub(crate) mod async_std;
 
+/// Functions implemented with `smol`.
+#[cfg(feature = "smol")]
+pub(crate) mod smol;
+
 /// Functions implemented with `tokio`.
 #[cfg(feature = "tokio")]
 pub(crate) mod tokio;

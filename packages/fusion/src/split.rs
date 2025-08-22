@@ -19,6 +19,19 @@ pub mod async_std {
     pub use crate::async_std::split::SplitAsyncExt;
 }
 
+/// Run asynchronously with `smol` feature.
+///
+/// To use it, add the following code to the `Cargo.toml` file:
+///
+/// ```toml
+/// [dependencies]
+/// filerune_fusion = { version = "*", features = ["smol"] }
+/// ```
+#[cfg(feature = "smol")]
+pub mod smol {
+    pub use crate::smol::split::SplitAsyncExt;
+}
+
 /// Run asynchronously with `tokio` feature.
 ///
 /// To use it, add the following code to the `Cargo.toml` file:

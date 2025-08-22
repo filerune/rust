@@ -1,7 +1,8 @@
-use async_std::{
+use std::path::{Path, PathBuf};
+
+use smol::{
     fs,
-    io::{self, ReadExt as _, WriteExt as _},
-    path::{Path, PathBuf},
+    io::{self, AsyncReadExt as _, AsyncWriteExt as _},
     stream::StreamExt as _,
 };
 
@@ -22,12 +23,12 @@ impl MergeAsyncExt for Merge {
                 let p: &Path = p.as_ref();
 
                 // if in_dir not exists
-                if !p.exists().await {
+                if !p.exists() {
                     return Err(MergeError::InDirNotFound);
                 }
 
                 // if in_dir not a directory
-                if !p.is_dir().await {
+                if !p.is_dir() {
                     return Err(MergeError::InDirNotDir);
                 }
 
@@ -41,8 +42,8 @@ impl MergeAsyncExt for Merge {
                 let p: &Path = p.as_ref();
 
                 // delete outpath target if exists
-                if p.exists().await {
-                    if p.is_dir().await {
+                if p.exists() {
+                    if p.is_dir() {
                         fs::remove_dir_all(p)
                             .await
                             .map_err(|_| MergeError::OutFileNotRemoved)?;
@@ -93,7 +94,7 @@ impl MergeAsyncExt for Merge {
         {
             let path: PathBuf = entry.path();
 
-            if path.is_file().await {
+            if path.is_file() {
                 entries.push(path);
             }
         }

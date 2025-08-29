@@ -5,20 +5,18 @@ use std::{
 
 use tokio::fs;
 
-use crate::check::{
-    Check, CheckError, CheckResult, CheckResultError, CheckResultErrorType,
-};
+use crate::check::{Check, CheckError, MissingChunks, SizeMismatch};
 
 /// Trait for running the check process.
 pub trait CheckAsyncExt {
     /// Run the check process asynchronously.
     fn run_async(
         &self
-    ) -> impl std::future::Future<Output = Result<CheckResult, CheckError>> + Send;
+    ) -> impl std::future::Future<Output = Result<bool, CheckError>> + Send;
 }
 
 impl CheckAsyncExt for Check {
-    async fn run_async(&self) -> Result<CheckResult, CheckError> {
+    async fn run_async(&self) -> Result<bool, CheckError> {
         let in_dir: &Path = match self.in_dir {
             | Some(ref p) => {
                 let p: &Path = p.as_ref();
@@ -74,29 +72,16 @@ impl CheckAsyncExt for Check {
         }
 
         if !missing.is_empty() {
-            return Ok(CheckResult {
-                success: false,
-                error: Some(CheckResultError {
-                    error_type: CheckResultErrorType::Missing,
-                    message: "Missing chunk(s)".to_string(),
-                    missing: Some(missing),
-                }),
-            });
+            return Err(CheckError::MissingChunks(MissingChunks { missing }));
         }
 
-        if actual_size != file_size {
-            return Ok(CheckResult {
-                success: false,
-                error: Some(CheckResultError {
-                    error_type: CheckResultErrorType::Size,
-                    message:
-                        "the size of chunks is not equal to file_size parameter"
-                            .to_string(),
-                    missing: None,
-                }),
-            });
+        if file_size != actual_size {
+            return Err(CheckError::SizeMismatch(SizeMismatch {
+                expected: file_size,
+                actual: actual_size,
+            }));
         }
 
-        Ok(CheckResult { success: true, error: None })
+        Ok(true)
     }
 }

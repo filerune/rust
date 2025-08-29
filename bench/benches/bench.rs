@@ -8,7 +8,7 @@ use criterion::{
     criterion_group, criterion_main,
 };
 use filerune_fusion::{
-    check::{Check, CheckResult},
+    check::Check,
     merge::Merge,
     split::{Split, SplitResult},
 };
@@ -192,7 +192,7 @@ fn bench_check(c: &mut Criterion) {
         let configs: Configs = get_configs(RUNTIME_STD);
 
         b.iter(|| {
-            let result: CheckResult = Check::new()
+            let result: bool = Check::new()
                 .in_dir(&configs.cache_dir.join("0"))
                 .file_size(split.file_size)
                 .total_chunks(split.total_chunks)
@@ -210,7 +210,7 @@ fn bench_check(c: &mut Criterion) {
         let configs: Configs = get_configs(RUNTIME_ASYNC_STD);
 
         b.to_async(AsyncStdExecutor).iter(async || {
-            let result: CheckResult = Check::new()
+            let result: bool = Check::new()
                 .in_dir(&configs.cache_dir.join("0"))
                 .file_size(split.file_size)
                 .total_chunks(split.total_chunks)
@@ -229,7 +229,7 @@ fn bench_check(c: &mut Criterion) {
         let configs: Configs = get_configs(RUNTIME_SMOL);
 
         b.to_async(SmolExecutor).iter(async || {
-            let result: CheckResult = Check::new()
+            let result: bool = Check::new()
                 .in_dir(&configs.cache_dir.join("0"))
                 .file_size(split.file_size)
                 .total_chunks(split.total_chunks)
@@ -253,7 +253,7 @@ fn bench_check(c: &mut Criterion) {
             .unwrap();
 
         b.to_async(runtime).iter(async || {
-            let result: CheckResult = Check::new()
+            let result: bool = Check::new()
                 .in_dir(&configs.cache_dir.join("0"))
                 .file_size(split.file_size)
                 .total_chunks(split.total_chunks)

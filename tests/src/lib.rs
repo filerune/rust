@@ -9,7 +9,7 @@ mod tests {
     use std::{env, fs, path::PathBuf};
 
     use filerune_fusion::{
-        check::{Check, CheckResult, CheckResultErrorType},
+        check::{Check, CheckError},
         merge::Merge,
         split::{Split, SplitResult},
     };
@@ -58,59 +58,54 @@ mod tests {
         let (_, cache_dir, _, split_result) =
             setup("check_with_missing_chunks");
 
-        let check_result: CheckResult = Check::new()
+        if let Err(error) = Check::new()
             .in_dir(&cache_dir)
             .file_size(split_result.file_size)
             .total_chunks(split_result.total_chunks + 1)
             .run()
-            .unwrap();
+        {
+            match error {
+                | CheckError::MissingChunks(_) => {
+                    return;
+                },
+                | err => panic!("Unexpected error: {:?}", err),
+            }
+        };
 
-        assert!(
-            !check_result.success,
-            "Check should fail due to missing chunks."
-        );
-        if let Some(e) = check_result.error {
-            assert_eq!(e.error_type, CheckResultErrorType::Missing);
-            assert_eq!(e.error_type.as_code(), "missing");
-        }
+        panic!("Check should fail due to missing chunks.");
     }
 
     #[tokio::test]
     async fn test_check_with_size_error() {
         let (_, cache_dir, _, split_result) = setup("check_with_size_error");
 
-        let check_result: CheckResult = Check::new()
+        if let Err(error) = Check::new()
             .in_dir(&cache_dir)
             .file_size(split_result.file_size + 1)
             .total_chunks(split_result.total_chunks)
             .run()
-            .unwrap();
+        {
+            match error {
+                | CheckError::SizeMismatch(_) => {
+                    return;
+                },
+                | err => panic!("Unexpected error: {:?}", err),
+            }
+        };
 
-        assert!(
-            !check_result.success,
-            "Check should fail due to size mismatch."
-        );
-        if let Some(e) = check_result.error {
-            assert_eq!(e.error_type, CheckResultErrorType::Size);
-            assert_eq!(e.error_type.as_code(), "size");
-        }
+        panic!("Check should fail due to size mismatch.");
     }
 
     #[tokio::test]
     async fn test_successful_check() {
         let (_, cache_dir, _, split_result) = setup("successful_check");
 
-        let check_result: CheckResult = Check::new()
+        Check::new()
             .in_dir(&cache_dir)
             .file_size(split_result.file_size)
             .total_chunks(split_result.total_chunks)
             .run()
             .unwrap();
-
-        assert!(
-            check_result.success == true,
-            "Check should succeed with no errors."
-        );
     }
 
     #[tokio::test]

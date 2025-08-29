@@ -54,6 +54,7 @@ pub struct SplitResult {
     pub total_chunks: usize,
 }
 
+/// Split process error enum.
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum SplitError {
     InFileNotFound,

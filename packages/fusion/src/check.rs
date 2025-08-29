@@ -118,10 +118,6 @@ impl CheckError {
 
 /// Process to check the file integrity.
 ///
-/// The function will return [`CheckResult`] (that may come
-/// with `success:false`) when the checking process runs successfully.
-/// Otherwise, it will return Error.
-///
 /// ## Example
 ///
 /// ```no_run

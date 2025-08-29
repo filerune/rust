@@ -45,6 +45,7 @@ pub mod tokio {
     pub use crate::tokio::merge::MergeAsyncExt;
 }
 
+/// Merge process error enum.
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum MergeError {
     InDirNotFound,

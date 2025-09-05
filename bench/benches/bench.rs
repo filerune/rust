@@ -192,7 +192,7 @@ fn bench_check(c: &mut Criterion) {
         let configs: Configs = get_configs(RUNTIME_STD);
 
         b.iter(|| {
-            let result: bool = Check::new()
+            let result: () = Check::new()
                 .in_dir(&configs.cache_dir.join("0"))
                 .file_size(split.file_size)
                 .total_chunks(split.total_chunks)
@@ -210,7 +210,7 @@ fn bench_check(c: &mut Criterion) {
         let configs: Configs = get_configs(RUNTIME_ASYNC_STD);
 
         b.to_async(AsyncStdExecutor).iter(async || {
-            let result: bool = Check::new()
+            let result: () = Check::new()
                 .in_dir(&configs.cache_dir.join("0"))
                 .file_size(split.file_size)
                 .total_chunks(split.total_chunks)
@@ -229,7 +229,7 @@ fn bench_check(c: &mut Criterion) {
         let configs: Configs = get_configs(RUNTIME_SMOL);
 
         b.to_async(SmolExecutor).iter(async || {
-            let result: bool = Check::new()
+            let result: () = Check::new()
                 .in_dir(&configs.cache_dir.join("0"))
                 .file_size(split.file_size)
                 .total_chunks(split.total_chunks)
@@ -253,7 +253,7 @@ fn bench_check(c: &mut Criterion) {
             .unwrap();
 
         b.to_async(runtime).iter(async || {
-            let result: bool = Check::new()
+            let result: () = Check::new()
                 .in_dir(&configs.cache_dir.join("0"))
                 .file_size(split.file_size)
                 .total_chunks(split.total_chunks)
@@ -286,7 +286,7 @@ fn bench_merge(c: &mut Criterion) {
         b.iter(|| {
             let out_file: PathBuf = configs.out_dir.join(format!("{}.jpg", i));
 
-            let result: bool = Merge::new()
+            let result: () = Merge::new()
                 .in_dir(&configs.cache_dir.join("0"))
                 .out_file(out_file)
                 .run()
@@ -320,7 +320,7 @@ fn bench_merge(c: &mut Criterion) {
             let out_file: PathBuf =
                 configs.out_dir.join(format!("{}.jpg", idx));
 
-            let result: bool = Merge::new()
+            let result: () = Merge::new()
                 .in_dir(&configs.cache_dir.join("0"))
                 .out_file(out_file)
                 .run_async()
@@ -353,7 +353,7 @@ fn bench_merge(c: &mut Criterion) {
             let out_file: PathBuf =
                 configs.out_dir.join(format!("{}.jpg", idx));
 
-            let result: bool = Merge::new()
+            let result: () = Merge::new()
                 .in_dir(&configs.cache_dir.join("0"))
                 .out_file(out_file)
                 .run_async()
@@ -391,7 +391,7 @@ fn bench_merge(c: &mut Criterion) {
             let out_file: PathBuf =
                 configs.out_dir.join(format!("{}.jpg", idx));
 
-            let result: bool = Merge::new()
+            let result: () = Merge::new()
                 .in_dir(&configs.cache_dir.join("0"))
                 .out_file(out_file)
                 .run_async()

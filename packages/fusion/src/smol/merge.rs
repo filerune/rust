@@ -13,11 +13,11 @@ pub trait MergeAsyncExt {
     /// Run the check process asynchronously.
     fn run_async(
         &self
-    ) -> impl std::future::Future<Output = Result<bool, MergeError>> + Send;
+    ) -> impl std::future::Future<Output = Result<(), MergeError>> + Send;
 }
 
 impl MergeAsyncExt for Merge {
-    async fn run_async(&self) -> Result<bool, MergeError> {
+    async fn run_async(&self) -> Result<(), MergeError> {
         let in_dir: &Path = match self.in_dir {
             | Some(ref p) => {
                 let p: &Path = p.as_ref();
@@ -145,6 +145,6 @@ impl MergeAsyncExt for Merge {
 
         writer.flush().await.map_err(|_| MergeError::OutFileNotWritten)?;
 
-        Ok(true)
+        Ok(())
     }
 }

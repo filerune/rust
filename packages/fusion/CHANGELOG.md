@@ -2,6 +2,8 @@
 
 ### Breaking Changes
 
+- Return `()` instead of `bool` when success in `Check` process
+- Return `()` instead of `bool` when success in `Merge` process
 - Remove `CheckResult` struct
 - Remove `CheckResultErrorType` enum
 

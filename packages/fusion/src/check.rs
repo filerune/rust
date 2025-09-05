@@ -190,7 +190,7 @@ impl Check {
     }
 
     /// Run the check process.
-    pub fn run(&self) -> Result<bool, CheckError> {
+    pub fn run(&self) -> Result<(), CheckError> {
         let in_dir: &Path = match self.in_dir {
             | Some(ref p) => {
                 let p: &Path = p.as_ref();
@@ -253,7 +253,7 @@ impl Check {
             }));
         }
 
-        Ok(true)
+        Ok(())
     }
 }
 

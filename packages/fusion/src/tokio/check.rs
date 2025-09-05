@@ -12,11 +12,11 @@ pub trait CheckAsyncExt {
     /// Run the check process asynchronously.
     fn run_async(
         &self
-    ) -> impl std::future::Future<Output = Result<bool, CheckError>> + Send;
+    ) -> impl std::future::Future<Output = Result<(), CheckError>> + Send;
 }
 
 impl CheckAsyncExt for Check {
-    async fn run_async(&self) -> Result<bool, CheckError> {
+    async fn run_async(&self) -> Result<(), CheckError> {
         let in_dir: &Path = match self.in_dir {
             | Some(ref p) => {
                 let p: &Path = p.as_ref();
@@ -82,6 +82,6 @@ impl CheckAsyncExt for Check {
             }));
         }
 
-        Ok(true)
+        Ok(())
     }
 }

@@ -125,7 +125,7 @@ impl MergeError {
 ///
 /// use filerune_fusion::merge::Merge;
 ///
-/// let result: bool = Merge::new()
+/// Merge::new()
 ///     .in_dir(PathBuf::from("path").join("to").join("dir"))
 ///     .out_file(PathBuf::from("path").join("to").join("file"))
 ///     .run()
@@ -183,7 +183,7 @@ impl Merge {
     }
 
     /// Run the merge process.
-    pub fn run(&self) -> Result<bool, MergeError> {
+    pub fn run(&self) -> Result<(), MergeError> {
         let in_dir: &Path = match self.in_dir {
             | Some(ref p) => {
                 let p: &Path = p.as_ref();
@@ -297,7 +297,7 @@ impl Merge {
 
         writer.flush().map_err(|_| MergeError::OutFileNotWritten)?;
 
-        Ok(true)
+        Ok(())
     }
 }
 

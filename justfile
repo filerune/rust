@@ -9,10 +9,6 @@ _:
     just fmt
     just test
 
-# Setup the project
-setup:
-    brew install ls-lint typos-cli
-
 # Lint code
 lint:
     ls-lint

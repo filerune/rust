@@ -1,5 +1,5 @@
 set shell := ["bash", "-cu"]
-set windows-shell := ["powershell"]
+set windows-shell := ["pwsh", "-Command"]
 
 fusion := "packages/fusion"
 
@@ -11,7 +11,7 @@ _:
 
 # Lint code
 lint:
-    ls-lint
+    ls-lint -config ./.ls-lint.yaml
     typos
     cargo check
     cargo clippy
@@ -52,5 +52,6 @@ clean:
     rm -rf ./tests/.media
 
 clean-all:
-    cargo clean
     just clean
+    
+    cargo clean
